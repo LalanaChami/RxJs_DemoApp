@@ -4,19 +4,26 @@ var obserbable = Observable.create((observer:any) => {
     try{
         observer.next('Hey yoo')
         observer.next('How are you ')
-        observer.complete()
-        observer.next('This is not printed ')
+        setInterval(()=>{
+            observer.next("This repeats....")
+        }, 2000)
+        // observer.complete()
+        // observer.next('This is not printed ')
         } //After complete the next will not run
         catch(err){
             observer.console.error(err);
         }
 });
 
-obserbable.subscribe(
+var observer = obserbable.subscribe(
     (x:any)=> addItem(x),
     (err:any)=> addItem(err),
     ()=> addItem("Completed")
     );
+
+    setTimeout(()=>{
+        observer.unsubscribe();
+    },6001)
 
 
 
