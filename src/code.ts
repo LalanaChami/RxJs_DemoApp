@@ -21,6 +21,13 @@ var observer = obserbable.subscribe(
     ()=> addItem("Completed")
     );
 
+var observer2 = obserbable.subscribe(
+    (x:any)=> addItem(x),
+    
+    );
+
+    observer.add(observer2); // adding the second observe to the first
+
     setTimeout(()=>{
         observer.unsubscribe();
     },6001)
