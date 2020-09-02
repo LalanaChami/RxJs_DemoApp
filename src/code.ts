@@ -1,34 +1,21 @@
-import {Observable} from "rxjs";
+import {Subject} from "rxjs";
 
-var obserbable = Observable.create((observer:any) => {
-    try{
-        observer.next('Hey yoo')
-        observer.next('How are you ')
-        setInterval(()=>{
-            observer.next("This repeats....")
-        }, 2000)
-        // observer.complete()
-        // observer.next('This is not printed ')
-        } //After complete the next will not run
-        catch(err){
-            observer.console.error(err);
-        }
-});
+var subject = new Subject();
 
-var observer = obserbable.subscribe(
-    (x:any)=> addItem(x),
-    (err:any)=> addItem(err),
-    ()=> addItem("Completed")
-    );
+subject.subscribe(
+    data => addItem('Observer 1 :'+data),
+    err => addItem(err),
+    () => addItem('Observer 1 compleated')
+)
 
+subject.next('The first thing has been sent')
 
-    setTimeout(()=>{
-        var observer2 = obserbable.subscribe(
-            (x:any)=> addItem("Subscriber 2 : " +x),
-            
-            );
-    },1000)
+var observer2 = subject.subscribe(
+    data => addItem('Observer 2 :' + data)
+)
 
+subject.next('The Second thing has been sent');
+subject.next('The third thing has been sent');
 
 
 function addItem(val:any) {
